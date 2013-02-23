@@ -22,13 +22,13 @@ var AutoCompleteItemView = Backbone.View.extend({
 
 var AutoCompleteView = Backbone.View.extend({
     tagName: "ul",
-    itemView: AutoCompleteItemView,
     className: "autocomplete",
-
     wait: 300,
+
     queryParameter: "query",
     minKeywordLength: 2,
     currentText: "",
+    itemView: AutoCompleteItemView,
 
     initialize: function (options) {
         _.extend(this, options);
