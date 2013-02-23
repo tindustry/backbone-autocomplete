@@ -1,4 +1,4 @@
-var AutocompleteItemView = Backbone.View.extend({
+var AutoCompleteItemView = Backbone.View.extend({
     tagName: "li",
     template: '<a href="#"><%= label %></a>',
 
@@ -20,9 +20,9 @@ var AutocompleteItemView = Backbone.View.extend({
 
 });
 
-var AutocompleteView = Backbone.View.extend({
+var AutoCompleteView = Backbone.View.extend({
     tagName: "ul",
-    itemView: AutocompleteItemView,
+    itemView: AutoCompleteItemView,
     className: "autocomplete",
 
     wait: 300,
@@ -133,6 +133,7 @@ var AutocompleteView = Backbone.View.extend({
         var label = model.label();
         this.input.val(label);
         this.currentText = label;
+        this.onSelect(model);
     },
 
     reset: function () {
@@ -148,5 +149,9 @@ var AutocompleteView = Backbone.View.extend({
     show: function () {
         this.$el.show();
         return this;
-    }
+    },
+
+    // callback definitions
+    onSelect: function () {}
+
 });
