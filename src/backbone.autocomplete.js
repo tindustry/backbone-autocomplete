@@ -27,6 +27,7 @@ var AutocompleteView = Backbone.View.extend({
 
     wait: 300,
     queryParameter: "query",
+    minKeywordLength: 2,
     currentText: "",
 
     initialize: function (options) {
@@ -35,8 +36,7 @@ var AutocompleteView = Backbone.View.extend({
     },
 
     render: function () {
-
-        // disable the auto complete functionality of browser
+        // disable the native auto complete functionality
         this.input.attr("autocomplete", "off");
 
         this.$el.width(this.input.outerWidth());
@@ -88,7 +88,7 @@ var AutocompleteView = Backbone.View.extend({
     },
 
     isValid: function (keyword) {
-        return keyword.length > 2
+        return keyword.length > this.minKeywordLength
     },
 
     isChanged: function (keyword) {
