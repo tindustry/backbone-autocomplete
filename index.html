@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Backbone Widgets</title>
+    <link rel="stylesheet" href="//raw.github.com/fatiherikli/backbone-autocomplete/master/src/backbone.autocomplete.css" />
+    <style type="text/css">
+        body {
+            margin: 0 0 70px;
+            font-family: helvetica, sans-serif;
+            font-size: 25px;
+        }
+
+        input {
+            font-size: 17px;
+            padding: 3px;
+            margin: 0;
+            outline: none;
+        }
+
+        header {
+            margin: 0;
+            border-bottom: 1px solid #e4e4e4;
+            padding: 50px 50px 20px;
+        }
+
+        header h1 {
+            color: #ff813d;
+        }
+
+        header h2 {
+            color: #565656;
+            font-size: 29px;
+            font-weight: normal;
+        }
+
+        header h1, header h2, section {
+            width: 890px;
+            margin: auto;
+        }
+
+        section {
+            overflow: hidden;
+        }
+
+        section h3 {
+            color: #424242;
+            margin: 30px 0 10px;
+        }
+
+        section h4 {
+            font-size: 20px;
+            margin: 0;
+            color: #424242;
+            padding: 0;
+        }
+
+        section p {
+            margin: 5px 0;
+            font-size: 18px;
+            color: #525252;
+        }
+
+        section form input {
+            width: 350px;
+            font-size: 20px;
+            padding: 10px;
+        }
+
+        #example, #selected {
+            float: left;
+            margin-right: 55px;
+        }
+
+        #selected {
+            display: none;
+            margin: 0;
+        }
+
+        #selected p {
+            margin: 0;
+            width: 430px;
+            padding: 10px;
+            background-color: #fafafa;
+            color: #404040;
+        }
+
+        p em {
+            background-color: #f6f2f4;
+            font-style: normal;
+            padding: 1px 4px;
+            border-radius: 1px;
+        }
+
+        pre {
+            font-size: 20px;
+            background-color: #fcfcfc;
+            padding: 10px;
+            color: #666666;
+            border: 1px solid #e8e8e8;
+            line-height: 29px;
+        }
+
+        table {
+            width: 100%;
+            font-size: 18px;
+            border: 1px solid #e8e8e8;
+        }
+
+        table th {
+            padding: 10px;
+            color: #515151;
+            font-weight: bold;
+        }
+
+        table td {
+            padding: 10px;
+            color: #515151;
+        }
+
+        p a {
+            color: black;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Backbone.AutoCompleteView</h1>
+    <h2>An auto-complete widget built with Backbone.js</h2>
+</header>
+<section>
+    <div id="example">
+        <h3>Example</h3>
+        <form action="#">
+            <input type="text" placeholder="Select a plugin (type backbone)" id="plugin" />
+        </form>
+    </div>
+    <div id="selected">
+        <h3>Selected Item</h3>
+        <p></p>
+    </div>
+</section>
+<section>
+    <h3>Usage</h3>
+    <p>Create a method that called `label` on your model.
+        That method will be used for representation of model.
+    </p>
+        <pre>
+var Plugin = Backbone.Model.extend({
+    label: function () {
+        return this.get("name");
+    }
+});</pre>
+    <p>Create a collection for auto-completion model.</p>
+        <pre>
+var PluginCollection = Backbone.Collection.extend({
+    model: Plugin
+});</pre>
+    <p>And initialize the AutoCompleteView in your view.</p>
+        <pre>
+new AutoCompleteView({
+    input: $("#plugin"), // your input field
+    model: plugins // your collection
+}).render();</pre>
+</section>
+
+<section>
+    <h3>Configuration</h3>
+    <table>
+        <tr>
+            <th>Parameter</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>className</td>
+            <td>string</td>
+            <td>autocomplete</td>
+            <td>The class name of popup menu.</td>
+        </tr>
+        <tr>
+            <td>wait</td>
+            <td>integer</td>
+            <td>300</td>
+            <td>The throttling value as milliseconds.</td>
+        </tr>
+        <tr>
+            <td>minKeywordLength</td>
+            <td>integer</td>
+            <td>2</td>
+            <td>Minimum keyword length.</td>
+        </tr>
+        <tr>
+            <td>queryParameter</td>
+            <td>string</td>
+            <td>query</td>
+            <td>The search parameter for back-end.</td>
+        </tr>
+        <tr>
+            <td>onSelect</td>
+            <td>function</td>
+            <td>no-op</td>
+            <td>The callback function for selected item. .</td>
+        </tr>
+    </table>
+</section>
+
+<section>
+    <h3>Contribution</h3>
+    <p><a href="https://github.com/fatiherikli/backbone-autocomplete">https://github.com/fatiherikli/backbone-autocomplete</a></p>
+</section>
+
+
+<script type="text/javascript" src="//code.jquery.com/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="//underscorejs.org/underscore-min.js"></script>
+<script type="text/javascript" src="//backbonejs.org/backbone-min.js"></script>
+<script type="text/javascript" src="//raw.github.com/fatiherikli/backbone-autocomplete/master/src/backbone.autocomplete.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        var Plugin = Backbone.Model.extend({
+            label: function () {
+                return this.get("name");
+            }
+        });
+
+        var PluginCollection = Backbone.Collection.extend({
+            model: Plugin
+        });
+
+        var plugins = new PluginCollection([
+            {"name": "backbone-autocomplete"},
+            {"name": "backbone-memento"},
+            {"name": "backbone-validations"},
+            {"name": "backbone-chosen"},
+            {"name": "backbone-relational"},
+            {"name": "backbone-bindings"},
+            {"name": "backbone-boilerplate"},
+            {"name": "backbone-traversal"},
+            {"name": "backbone-factory"},
+            {"name": "jquery"},
+            {"name": "jquery-ui"},
+            {"name": "angular.js"},
+            {"name": "keymaster.js"}
+        ]);
+
+        new AutoCompleteView({
+            input: $("#plugin"),
+            model: plugins,
+            onSelect: function (model) {
+                $("#selected").show().find("p").html(model.label());
+            }
+        }).render();
+
+    });
+</script>
+</body>
+</html>
