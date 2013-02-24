@@ -49,7 +49,7 @@ var AutoCompleteView = Backbone.View.extend({
         return this;
     },
 
-    keydown: function () {
+    keydown: function (event) {
         if (event.keyCode == 38) return this.move(-1);
         if (event.keyCode == 40) return this.move(+1);
         if (event.keyCode == 13) return this.onEnter();
