@@ -5,6 +5,10 @@ var AutoCompleteItemView = Backbone.View.extend({
     events: {
         "click": "select"
     },
+    
+    initialize: function(options) {
+        this.options = options;
+    },
 
     render: function () {
         this.$el.html(this.template({
