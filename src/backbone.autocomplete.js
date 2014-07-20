@@ -21,7 +21,7 @@ var AutoCompleteItemView = Backbone.View.extend({
         var op = this.options.parent;
         if (label && op.highlight && op.currentText) {
             label = label.replace(
-                new RegExp(op.currentText, "gi"),
+                new RegExp(this.escapeRegExp(op.currentText), "gi"),
                 function (matched) {
                     return '<b class="' + op.highlight + '">' + matched + '</b>'
                 }
@@ -29,6 +29,11 @@ var AutoCompleteItemView = Backbone.View.extend({
         }
         return label;
     },
+
+	escapeRegExp: function(str) {
+		// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
+		return String(str).replace(/([.*+?^${}()|\[\]\/\\])/g, "\\$1");
+	},
 
     select: function () {
         this.options.parent.hide().select(this.model);
