@@ -53,7 +53,25 @@ var AutoCompleteView = Backbone.View.extend({
     itemView: AutoCompleteItemView,
     highlight: "",
 
-    initialize: function (options) {
+    charMap: {
+        'a': /[àáâä]/gi,
+        'c': /[çč]/gi,
+        'd': /[ď]/gi,
+        'e': /[èéêëě]/gi,
+        'i': /[ïí]/gi,
+        'l': /[ľĺ]/gi,
+        'n': /[ň]/gi,
+        'o': /[ôó]/gi,
+        'oe': /[œ]/gi,
+        'r': /[ŕř]/gi,
+        's': /[š]/gi,
+        't': /[ť]/gi,
+        'u': /[üúů]/gi,
+        'y': /[ý]/gi,
+        'z': /[ž]/gi,
+    },
+
+    initialize: function(options) {
         _.extend(this, options);
         this.filter = _.debounce(this.filter, this.wait);
     },
@@ -91,6 +109,13 @@ var AutoCompleteView = Backbone.View.extend({
         }
     },
 
+    normalize: function(str) {
+        $.each(this.charMap, function(normalized, regex) {
+            str = str.replace(regex, normalized);
+        });
+        return str;
+    },
+
     filter: function (keyword) {
     	var keyword = keyword.toLowerCase();
         if (this.model.url) {
@@ -110,9 +135,9 @@ var AutoCompleteView = Backbone.View.extend({
             });
 
         } else {
-            this.loadResult(this.model.filter(function (model) {
-                return model.label().toLowerCase().indexOf(keyword) !== -1
-            }), keyword);
+            this.loadResult(this.model.filter(function(model) {
+                return this.normalize(model.label().toLowerCase()).indexOf(keyword) !== -1
+            }, this), keyword);
         }
     },
 
