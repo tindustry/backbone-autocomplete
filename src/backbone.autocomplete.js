@@ -117,7 +117,7 @@ var AutoCompleteView = Backbone.View.extend({
     },
 
     filter: function (keyword) {
-    	var keyword = keyword.toLowerCase();
+        var keyword = this.normalize(keyword.toLowerCase());
         if (this.model.url) {
 
             var parameters = {};
